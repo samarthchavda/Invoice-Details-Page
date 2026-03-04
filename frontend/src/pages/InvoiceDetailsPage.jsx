@@ -142,8 +142,9 @@ const InvoiceDetailsPage = () => {
               <PaymentsList payments={payments} />
             </section>
           </div>
+        </div>
       </motion.div>
-    </motion.div>
+
       {showAddPaymentModal && (
         <AddPaymentModal
           invoice={invoice}
@@ -151,7 +152,7 @@ const InvoiceDetailsPage = () => {
           onPaymentAdded={handlePaymentAdded}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 
