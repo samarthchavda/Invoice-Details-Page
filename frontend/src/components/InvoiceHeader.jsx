@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InvoiceHeader = ({ invoice, onArchive, onRestore }) => {
+const InvoiceHeader = ({ invoice, onArchive, onRestore, onDownloadPDF }) => {
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -23,6 +23,15 @@ const InvoiceHeader = ({ invoice, onArchive, onRestore }) => {
           <p className="text-blue-100">Invoice #{invoice.invoiceNumber}</p>
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={onDownloadPDF}
+            className="px-4 py-2 bg-white hover:bg-gray-100 text-blue-600 rounded-lg font-medium transition flex items-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download PDF
+          </button>
           {invoice.isArchived ? (
             <button
               onClick={onRestore}

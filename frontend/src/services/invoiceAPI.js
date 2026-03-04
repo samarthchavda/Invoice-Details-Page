@@ -30,6 +30,13 @@ export const invoiceAPI = {
   restoreInvoice: (invoiceId) => {
     return apiClient.post('/invoices/restore', { id: invoiceId });
   },
+
+  // Download invoice PDF
+  downloadPDF: (invoiceId) => {
+    return apiClient.get(`/invoices/${invoiceId}/pdf`, {
+      responseType: 'blob',
+    });
+  },
 };
 
 export default apiClient;

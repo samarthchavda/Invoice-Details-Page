@@ -68,6 +68,24 @@ const InvoiceDetailsPage = () => {
     }
   };
 
+  const handleDownloadPDF = async () => {
+    try {
+      const response = await invoiceAPI.downloadPDF(id);
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `invoice-${invoice.invoiceNumber}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Error downloading PDF:', err);
+      setError('Failed to download PDF');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -110,6 +128,7 @@ const InvoiceDetailsPage = () => {
             invoice={invoice}
             onArchive={handleArchive}
             onRestore={handleRestore}
+            onDownloadPDF={handleDownloadPDF}
           />
 
           <div className="p-6 sm:p-8">
