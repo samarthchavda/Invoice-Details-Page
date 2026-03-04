@@ -2,6 +2,15 @@ const Invoice = require('../models/Invoice');
 const InvoiceLine = require('../models/InvoiceLine');
 const Payment = require('../models/Payment');
 
+exports.getAllInvoices = async (req, res) => {
+  try {
+    const invoices = await Invoice.find({}).sort({ invoiceNumber: 1 });
+    res.json({ invoices });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.getInvoiceDetails = async (req, res) => {
   try {
     const { id } = req.params;
