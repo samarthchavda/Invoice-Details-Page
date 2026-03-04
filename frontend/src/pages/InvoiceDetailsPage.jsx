@@ -25,14 +25,12 @@ const InvoiceDetailsPage = () => {
       setLoading(true);
       setError(null);
       const response = await invoiceAPI.getInvoiceDetails(id);
-      setInvoice(response.data.data.invoice);
-      setLineItems(response.data.data.lineItems);
-      setPayments(response.data.data.payments);
+      setInvoice(response.data.invoice);
+      setLineItems(response.data.lineItems);
+      setPayments(response.data.payments);
     } catch (err) {
       console.error('Error fetching invoice details:', err);
-      setError(
-        err.response?.data?.message || 'Failed to fetch invoice details'
-      );
+      setError(err.response?.data?.error || 'Failed to fetch invoice details');
     } finally {
       setLoading(false);
     }

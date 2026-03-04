@@ -31,9 +31,7 @@ const AddPaymentModal = ({ invoice, onClose, onPaymentAdded }) => {
         paymentDate,
       });
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Failed to add payment. Please try again.'
-      );
+      setError(err.response?.data?.error || 'Failed to add payment');
     } finally {
       setLoading(false);
     }
