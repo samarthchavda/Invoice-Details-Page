@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const AddPaymentModal = ({ invoice, onClose, onPaymentAdded }) => {
   const [amount, setAmount] = useState('');
@@ -38,8 +39,19 @@ const AddPaymentModal = ({ invoice, onClose, onPaymentAdded }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50"
+    >
+      <motion.div
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.85, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="bg-white rounded-lg shadow-xl max-w-md w-full"
+      >
         <div className="bg-blue-600 px-6 py-4 text-white flex justify-between items-center">
           <h2 className="text-xl font-bold">Add Payment</h2>
           <button
@@ -135,8 +147,8 @@ const AddPaymentModal = ({ invoice, onClose, onPaymentAdded }) => {
             </div>
           </form>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -1,368 +1,190 @@
-# Invoice Management System
+# Invoice Details Page (MERN Stack)
 
-A full-stack invoice management application built with **React**, **Express.js**, and **MongoDB**.
+## 📌 Project Overview
 
-## Features
+This is a Full Stack Invoice Details Module built using the MERN stack (MongoDB, Express, React, Node.js).
 
-✅ Create invoices with line items  
-✅ View invoice details  
-✅ Track payments  
-✅ Archive/Restore invoices  
-✅ Real-time live preview  
-✅ Automatic calculations  
-✅ Responsive design with Tailwind CSS  
+The application allows users to:
 
-## Tech Stack
+- View invoice details
+- View line items
+- View payment history
+- Add new payments
+- Automatically update balance and invoice status
+- Archive and restore invoices
 
-- **Frontend**: React 18, Vite, Tailwind CSS, Axios
-- **Backend**: Express.js, Node.js, Mongoose
-- **Database**: MongoDB Atlas
-- **API**: RESTful
+This project focuses on implementing proper business logic, API validation, and clean UI structure.
 
-## Project Structure
+---
 
-```
-Assignemt/
+## 🛠 Tech Stack
+
+### Frontend
+- React
+- React Router
+- Axios
+- CSS / Tailwind (if used)
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+---
+
+## 🧠 Business Logic Implemented
+
+- Line Total = quantity × unitPrice
+- Total = sum of all line totals
+- Balance Due = total – amountPaid
+- Overpayment is not allowed
+- If balanceDue = 0 → Status automatically changes to PAID
+- Invoice can be archived and restored
+
+---
+
+## 📂 Project Structure
+
+Invoice-Details-Page/
+│
 ├── backend/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   └── invoiceController.js
-│   ├── middleware/
-│   │   └── logger.js
 │   ├── models/
-│   │   ├── Invoice.js
-│   │   ├── InvoiceLine.js
-│   │   └── Payment.js
 │   ├── routes/
-│   │   └── invoiceRoutes.js
-│   ├── server.js
-│   ├── package.json
-│   └── .env
+│   ├── controllers/
+│   └── server.js
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── InvoiceHeader.jsx
-│   │   │   ├── LineItemsTable.jsx
-│   │   │   ├── TotalsSection.jsx
-│   │   │   ├── PaymentsList.jsx
-│   │   │   ├── AddPaymentModal.jsx
-│   │   │   └── InvoicePreview.jsx
-│   │   ├── pages/
-│   │   │   ├── InvoiceDetailsPage.jsx
-│   │   │   └── CreateInvoicePage.jsx
-│   │   ├── services/
-│   │   │   └── invoiceAPI.js
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── vite.config.js
-│   ├── tailwind.config.js
-│   ├── package.json
-│   ├── .env
-│   └── index.html
+│   ├── pages/
+│   ├── components/
+│   └── services/
 │
 └── README.md
-```
 
 ---
 
-## Prerequisites
+## ⚙️ Backend Setup
 
-Before you begin, ensure you have the following installed:
+1. Navigate to backend folder:
 
-- **Node.js** (v14 or higher)
-- **npm** (comes with Node.js)
-- **MongoDB Atlas Account** (cloud database)
-
----
-
-## Setup Instructions
-
-### 1. Navigate to Project Directory
-
-```bash
-cd /path/to/Assignemt
-```
-
-### 2. Backend Environment Configuration
-
-Navigate to the backend folder and create a `.env` file:
-
-```bash
 cd backend
-```
 
-Create `.env` file with:
+2. Install dependencies:
 
-```env
-PORT=3001
-MONGODB_URI=mongodb+srv://Study_Point:samarth123@cluster0.igiky9p.mongodb.net/invoice_management?retryWrites=true&w=majority&tls=true&appName=Cluster0
-NODE_ENV=development
-
-# Cloudinary Configuration (Optional)
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-```
-
-### 3. Frontend Environment Configuration
-
-Navigate to the frontend folder and create a `.env` file:
-
-```bash
-cd ../frontend
-```
-
-Create `.env` file with:
-
-```env
-VITE_API_BASE_URL=http://localhost:3001/api
-```
-
----
-
-## How to Run the Backend
-
-### Step 1: Navigate to Backend Directory
-
-```bash
-cd backend
-```
-
-### Step 2: Install Dependencies
-
-```bash
 npm install
-```
 
-### Step 3: Start the Server
+3. Create a `.env` file and add:
 
-```bash
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+
+4. Start server:
+
 npm start
-```
 
-**Expected Output:**
-```
-Server running on port 3001
-MongoDB connected successfully
-```
-
-**Backend will be available at:** `http://localhost:3001`
-
-**API Endpoints:**
-- `GET /api/invoices/:id` - Get invoice details
-- `POST /api/invoices` - Create invoice
-- `POST /api/invoices/:id/payments` - Add payment
-- `POST /api/invoices/:id/archive` - Archive invoice
-- `POST /api/invoices/:id/restore` - Restore invoice
-- `GET /api/health` - Health check
+Backend will run on:
+http://localhost:5000
 
 ---
 
-## How to Run the Frontend
+## 🎨 Frontend Setup
 
-### Step 1: Navigate to Frontend Directory
+1. Navigate to frontend folder:
 
-```bash
 cd frontend
-```
 
-### Step 2: Install Dependencies
+2. Install dependencies:
 
-```bash
 npm install
-```
 
-### Step 3: Start the Development Server
+3. Start frontend:
 
-```bash
 npm run dev
-```
 
-**Expected Output:**
-```
-  VITE v4.5.14  ready in 171 ms
-
-  ➜  Local:   http://localhost:3000/
-  ➜  Network: use --host to expose
-```
-
-**Frontend will be available at:** `http://localhost:3000`
+Frontend will run on:
+http://localhost:5173
 
 ---
 
-## Running Both Servers (Recommended)
+## 🔗 API Endpoints
 
-Open **two terminal windows**:
+### Get Invoice Details
+GET /api/invoices/:id
 
-**Terminal 1 - Backend:**
-```bash
-cd backend
-npm install
-npm start
-```
+### Add Payment
+POST /api/invoices/:id/payments
 
-**Terminal 2 - Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Rules:
+- amount > 0
+- amount ≤ balanceDue
+- Prevent overpayment
+- Auto update status to PAID when fully paid
 
-Then open your browser and visit: **http://localhost:3000**
+### Archive Invoice
+POST /api/invoices/archive
 
----
-
-## Application Workflow
-
-| Page | URL | Description |
-|------|-----|-------------|
-| **Home** | http://localhost:3000 | Dashboard with navigation |
-| **Create Invoice** | http://localhost:3000/invoices/new | Create invoices with live preview |
-| **View Invoice** | http://localhost:3000/invoices/:id | View invoice and manage payments |
+### Restore Invoice
+POST /api/invoices/restore
 
 ---
 
-## Create Your First Invoice
+## 💡 Key Features
 
-### Via Web Interface
-1. Go to http://localhost:3000/invoices/new
-2. Fill in invoice details
-3. Add line items
-4. Click "Send Invoice"
-5. View the invoice at the generated URL
-
-### Via API (cURL)
-```bash
-curl -X POST http://localhost:3001/api/invoices \
-  -H "Content-Type: application/json" \
-  -d '{
-    "invoiceNumber": "INV-001",
-    "customerName": "Acme Enterprise",
-    "issueDate": "2026-03-01",
-    "dueDate": "2026-03-31",
-    "address": "1901 Thornridge Cir, Hawaii",
-    "currency": "USD",
-    "lineItems": [
-      {
-        "description": "Web Development",
-        "quantity": 10,
-        "unitPrice": 5000
-      },
-      {
-        "description": "UI/UX Design",
-        "quantity": 5,
-        "unitPrice": 3000
-      }
-    ]
-  }'
-```
+✔ Invoice header section  
+✔ Line items table  
+✔ Totals calculation  
+✔ Payment history  
+✔ Add payment modal  
+✔ Status badge (DRAFT / PAID)  
+✔ Archive & restore functionality  
 
 ---
 
-## Troubleshooting
+## 🚀 Bonus Features Implemented (+50 Points)
 
-### Backend Won't Start
-```bash
-# Check if port 3001 is in use
-lsof -i :3001
+✅ **Authentication (JWT)** - User registration and login with JWT tokens
+- POST /api/auth/register - Register new user with hashed password
+- POST /api/auth/login - Login and receive JWT token
+- GET /api/auth/profile - Get authenticated user profile
 
-# Kill the process using port 3001
-kill -9 <PID>
+✅ **PDF Invoice Generation** - Download invoices as PDF
+- GET /api/invoices/:id/pdf - Generate and download invoice PDF
+- Includes invoice details, line items, and payment history
 
-# Verify MongoDB connection string in .env
-```
+✅ **Tax Calculation** - Configurable tax rates per invoice
+- Added taxRate and taxAmount fields to Invoice model
+- Automatic tax calculation with subtotal support
+- Display tax breakdown in invoice details
 
-### Frontend Won't Start
-```bash
-# Check if port 3000 is in use
-lsof -i :3000
+✅ **Multi-Currency Support** - USD, EUR, GBP, INR
+- Currency selection dropdown in forms
+- Dynamic currency symbols based on selection
+- Backend currency utilities for symbol and name mapping
 
-# Clear and reinstall dependencies
-rm -rf node_modules package-lock.json
-npm install
+✅ **Overdue Status Logic** - Automatic overdue tracking
+- isOverdue flag on Invoice model
+- Automatically marked overdue if dueDate < today AND balanceDue > 0
+- OVERDUE badge in invoice header when applicable
 
-# Verify .env has correct API URL
-```
-
-### MongoDB Connection Error
-- Verify cluster is active in MongoDB Atlas
-- Check username/password in connection string
-- Ensure your IP is whitelisted in MongoDB Atlas
-
-### API Connection Issues
-- Ensure backend is running on port 3001
-- Verify frontend `.env` has correct API URL
-- Check browser console for error messages
+✅ **Advanced UI Animations** - Framer Motion animations
+- Page entrance animations with fade and slide effects
+- Modal animations with spring physics
+- Button interactions with whileHover and whileTap
+- Smooth transitions on all interactive elements
+- Login page with gradient background and staggered input animations
 
 ---
 
-## Database Models
+## 🚀 Future Improvements (Optional)
 
-**Invoice Schema:**
-- invoiceNumber (String, unique)
-- customerName (String)
-- issueDate (Date)
-- dueDate (Date)
-- status (DRAFT | PAID)
-- total (Number)
-- amountPaid (Number)
-- balanceDue (Number)
-
-**InvoiceLine Schema:**
-- invoiceId (Reference)
-- description (String)
-- quantity (Number)
-- unitPrice (Number)
-- lineTotal (Number)
-
-**Payment Schema:**
-- invoiceId (Reference)
-- amount (Number)
-- paymentDate (Date)
+- Email notifications for overdue invoices
+- Recurring invoice templates
+- Multi-language support
+- Invoice versioning
+- Client portal access
 
 ---
 
-## Key Features
+## 👨‍💻 Author
 
-### Create Invoice
-- Add customer details
-- Create invoice number
-- Add multiple line items
-- Select currency
-- Live preview updates in real-time
-- Save as Draft or Send immediately
-
-### Manage Invoices
-- View complete invoice details
-- Track all payments
-- Add new payments with validation
-- View balance due
-- Archive completed invoices
-- Restore archived invoices
-
-### Automatic Calculations
-- Line total = quantity × unit price
-- Invoice total = sum of all line totals
-- Tax calculation = total × 10%
-- Balance due = total - amount paid
-- Auto status update when paid
-
----
-
-## License
-
-MIT - Feel free to use for learning and development.
-
----
-
-## Support
-
-For issues:
-1. Check terminal console for error messages
-2. Verify all `.env` variables are set correctly
-3. Ensure both servers are running
-4. Check browser console (F12) for frontend errors
-
-Happy invoicing! 📋✨
+Samarth Chavda

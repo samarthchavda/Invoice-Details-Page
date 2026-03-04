@@ -26,7 +26,28 @@ const invoiceSchema = new mongoose.Schema({
       enum: ['DRAFT', 'PAID'],
       default: 'DRAFT',
     },
+    currency: {
+      type: String,
+      enum: ['USD', 'EUR', 'GBP', 'INR'],
+      default: 'USD',
+    },
     total: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    taxRate: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    taxAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    subtotal: {
       type: Number,
       default: 0,
       min: 0,
@@ -45,6 +66,10 @@ const invoiceSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    isOverdue: {
+      type: Boolean,
+      default: false,
+    },
   });
 
 invoiceSchema.pre('save', function (next) {
@@ -54,6 +79,11 @@ invoiceSchema.pre('save', function (next) {
   } else {
     this.status = 'DRAFT';
   }
+  
+  const today = new Date();
+  const dueDate = new Date(this.dueDate);
+  this.isOverdue = dueDate < today && this.balanceDue > 0;
+  
   next();
 });
 

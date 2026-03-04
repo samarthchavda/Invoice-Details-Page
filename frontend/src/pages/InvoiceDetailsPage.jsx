@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { invoiceAPI } from '../services/invoiceAPI';
 import InvoiceHeader from '../components/InvoiceHeader';
 import LineItemsTable from '../components/LineItemsTable';
@@ -92,8 +93,18 @@ const InvoiceDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8"
+    >
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="max-w-4xl mx-auto"
+      >
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <InvoiceHeader
             invoice={invoice}
@@ -131,9 +142,8 @@ const InvoiceDetailsPage = () => {
               <PaymentsList payments={payments} />
             </section>
           </div>
-        </div>
-      </div>
-
+      </motion.div>
+    </motion.div>
       {showAddPaymentModal && (
         <AddPaymentModal
           invoice={invoice}

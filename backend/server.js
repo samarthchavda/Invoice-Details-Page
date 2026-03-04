@@ -13,7 +13,10 @@ app.use(express.json());
 app.use(logger);
 
 const invoiceRoutes = require('./routes/invoiceRoutes');
+const authRoutes = require('./routes/authRoutes');
+
 app.use('/api/invoices', invoiceRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK' }));
 
